@@ -47,19 +47,6 @@ const SignUpModal = ({ onClose }) => {
           </button>
 
           {/* Recruiter Email */}
-          /*
-          <button
-            type="button"
-            onClick={() => {
-              onClose();
-              navigate("/recruiter-login");
-            }}
-            className="flex items-center gap-3 border border-gray-200 rounded-xl px-5 py-4 bg-[#f3f1ed] hover:bg-gray-200 text-black font-medium shadow-sm"
-          >
-            <MdEmail />
-            Continue as Recruiter (by email)
-          </button>
-          */
 
         </div>
       </div>
