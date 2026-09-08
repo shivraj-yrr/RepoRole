@@ -47,6 +47,7 @@ const SignUpModal = ({ onClose }) => {
           </button>
 
           {/* Recruiter Email */}
+          /*
           <button
             type="button"
             onClick={() => {
@@ -58,6 +59,7 @@ const SignUpModal = ({ onClose }) => {
             <MdEmail />
             Continue as Recruiter (by email)
           </button>
+          */
 
         </div>
       </div>
