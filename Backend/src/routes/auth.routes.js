@@ -9,7 +9,6 @@ authRouter.get('/github', githubAuth);
 authRouter.get('/github/callback', githubAuthCallback);
 authRouter.get('/me', requireAuth, getMe);
 authRouter.post('/logout', logout);
-
 //authRouter.post('/recruiter/email/otp', sendRecruiterOtp);
 //authRouter.post('/recruiter/email/verify', verifyRecruiterOtp);
 
