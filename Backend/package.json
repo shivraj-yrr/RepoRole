@@ -6,7 +6,7 @@
   "scripts": {
     "build": "prisma generate",
     "start": "node src/server.js",
-    "test": "vitest",
+    "test": "vitest --config vitest.config.js",
     "dev": "npx tsx watch src/server.js "
   },
   "keywords": [],

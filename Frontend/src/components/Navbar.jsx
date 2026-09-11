@@ -1,52 +1,27 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import SignUpModal from "./SignUpModal";
-import { API } from "../utils/api";
 import { useNavigate, Link, useLocation } from "react-router-dom";
+import { useContext } from "react";
+import { AuthContext } from "../context/AuthContext";
 
 const Navbar = () => {
   const navigate = useNavigate();
   const location = useLocation();
+  const { user, logout } = useContext(AuthContext);
 
   const [open, setOpen] = useState(false);
   const [showModal, setShowModal] = useState(false);
-  const [user, setUser] = useState(null);
 
-  // ✅ Check if user is logged in
-  useEffect(() => {
-    const checkUser = async () => {
-      try {
-        const res = await fetch(API.me, {
-          credentials: "include",
-        });
-
-        if (res.ok) {
-          const data = await res.json();
-          setUser(data.user || data);
-        }
-      } catch (err) {
-        console.log(err);
-      }
-    };
-
-    checkUser();
-  }, []);
-
-  // ✅ Logout function
   const handleLogout = async () => {
-  try {
-    await fetch(API.logout, {
-      method: "GET",
-      credentials: "include",
-    });
-
-    setUser(null);
-
-    // ✅ Better than window.location
-    navigate("/");
-  } catch (err) {
-    console.error(err);
-  }
-};
+    try {
+      await logout();
+    } catch (err) {
+      console.error("Logout error:", err);
+    } finally {
+      setOpen(false);
+      navigate("/");
+    }
+  };
 
   return (
     <>
@@ -161,8 +136,7 @@ const Navbar = () => {
             {user ? (
               <button
                 onClick={() => {
-                  handleLogout();
-                  setOpen(false);
+                    handleLogout();
                 }}
                 className="bg-red-400 px-5 py-2 rounded-lg font-semibold text-black"
               >

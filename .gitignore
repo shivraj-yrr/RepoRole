@@ -36,6 +36,7 @@ coverage/
 .nyc_output/
 
 # Temp files
+temp.routes.js
 rough.txt
 tmp/
 temp/
@@ -58,4 +59,9 @@ Roadmap.md
 db.js
 email-auth.controller.js
 recruiter.middleware.js
+implementation_plan.md
+rough.txt
+ARCHITECTURE.md
+DECISIONS.md
+
 

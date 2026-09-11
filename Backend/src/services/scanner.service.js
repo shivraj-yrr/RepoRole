@@ -14,7 +14,7 @@ export const MANIFEST_FILES = [
   "README.md"
 ];
 
-const CODE_EXTENSIONS = new Set([".js", ".jsx", ".ts", ".tsx"]);
+const CODE_EXTENSIONS = new Set([".js", ".jsx", ".ts", ".tsx", ".py", ".java"]);
 const IGNORED_PATH_PARTS = new Set([
   ".git",
   "node_modules",
@@ -95,6 +95,12 @@ export async function JSTSFiles(owner, repo, structure) {
   for (const item of selectedFiles) {
     const contentRes = await fetchContent(owner, repo, item.path);
     const content = Buffer.from(contentRes.data.content, "base64").toString("utf-8");
+    const extension = getExtension(item.path);
+
+    if ([".py", ".java"].includes(extension)) {
+      parsedFiles.push({ path: item.path, content });
+      continue;
+    }
 
     try {
       const ast = parser.parse(content, {
@@ -138,12 +144,12 @@ function classifyCodeFile(filePath) {
   const parts = lowerPath.split("/");
 
   if (isEntrypoint(fileName)) return "entrypoint";
-  if (matchesPart(parts, "route") || matchesPart(parts, "router")) return "route";
-  if (matchesPart(parts, "controller")) return "controller";
-  if (matchesPart(parts, "service")) return "service";
-  if (matchesPart(parts, "middleware")) return "middleware";
-  if (matchesPart(parts, "model") || matchesPart(parts, "schema")) return "model";
-  if (matchesPart(parts, "auth") || matchesPart(parts, "security")) return "auth";
+  if (matchesPart(parts, "route") || matchesPart(parts, "router") || matchesPart(parts, "handler") || matchesPart(parts, "api")) return "route";
+  if (matchesPart(parts, "controller") || matchesPart(parts, "resolver")) return "controller";
+  if (matchesPart(parts, "service") || matchesPart(parts, "provider") || matchesPart(parts, "manager")) return "service";
+  if (matchesPart(parts, "middleware") || matchesPart(parts, "interceptor") || matchesPart(parts, "guard")) return "middleware";
+  if (matchesPart(parts, "model") || matchesPart(parts, "schema") || matchesPart(parts, "entity") || matchesPart(parts, "dto")) return "model";
+  if (matchesPart(parts, "auth") || matchesPart(parts, "security") || matchesPart(parts, "passport") || matchesPart(parts, "jwt")) return "auth";
   if (matchesPart(parts, "config") || fileName.includes(".config.")) return "config";
   if (matchesPart(parts, "hook")) return "hook";
   if (matchesPart(parts, "store") || matchesPart(parts, "slice")) return "store";
@@ -204,8 +210,8 @@ function getFilePriority(filePath) {
 
   if (isEntrypoint(fileName)) return 0;
   if (fileName.startsWith("index.")) return 1;
-  if (fileName.includes("route") || fileName.includes("controller")) return 2;
-  if (fileName.includes("service") || fileName.includes("middleware")) return 3;
+  if (fileName.includes("route") || fileName.includes("controller") || fileName.includes("handler")) return 2;
+  if (fileName.includes("service") || fileName.includes("middleware") || fileName.includes("provider")) return 3;
   if (fileName.includes("hook") || fileName.includes("component")) return 4;
   if (fileName.includes("test") || fileName.includes("spec")) return 5;
   return 10;

@@ -20,11 +20,12 @@ export async function analyzeRepository(repoUrl) {
   );
 
   const detailedSignals = extractCodeSignals(parsedFiles, repoData.structure);
+  projectSignals.detailedSignals = detailedSignals;
 
   const { roleSignals, unmappedSignals } = generalizeRoleSignals(detailedSignals);
 
   projectSignals.metadata.isToy = detectToyProject(projectSignals);
-  projectSignals.roles = scoreRepository(roleSignals);
+  projectSignals.roles = scoreRepository(roleSignals, projectSignals.metadata.isToy);
 
   return {
     ...projectSignals,

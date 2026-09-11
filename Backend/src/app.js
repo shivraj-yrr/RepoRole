@@ -20,7 +20,15 @@ app.use(cookieParser());
 app.use(express.json());
 
 app.get('/', (req, res) => {
-    res.send('welcome to the backend API of REPOROLE');
+    res.sendFile(path.join(__dirname, '..', 'index.html'));
+});
+
+app.get('/welcome.css', (req, res) => {
+    res.sendFile(path.join(__dirname, '..', 'style.css'));
+});
+
+app.get('/welcome.js', (req, res) => {
+    res.sendFile(path.join(__dirname, '..', 'script.js'));
 });
 
 app.use('/analyze', algoRoutes);

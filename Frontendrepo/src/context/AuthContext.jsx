@@ -1,5 +1,5 @@
 import { createContext, useEffect, useState } from "react";
-import axios from "axios";
+import { API } from "../utils/api";
 
 export const AuthContext = createContext();
 
@@ -9,22 +9,16 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const token = localStorage.getItem("token");
+        const response = await fetch(API.me, { credentials: "include" });
+        if (!response.ok) {
+          setUser(null);
+          return;
+        }
 
-        if (!token) return;
-
-        const res = await axios.get(
-          "https://reposense.onrender.com/auth/me",
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
-
-        setUser(res.data.user);
+        const data = await response.json();
+        setUser(data.user || data);
       } catch (err) {
-        console.error("Auth error:", err.response?.data || err.message);
+        console.error("Auth error:", err.message);
         setUser(null);
       }
     };
@@ -32,8 +26,24 @@ export const AuthProvider = ({ children }) => {
     fetchUser();
   }, []);
 
+  const logout = async () => {
+    try {
+      const response = await fetch(API.logout, {
+        method: "POST",
+        credentials: "include",
+      });
+
+      if (!response.ok) {
+        throw new Error(`Logout failed with status ${response.status}`);
+      }
+    } finally {
+      localStorage.removeItem("token");
+      setUser(null);
+    }
+  };
+
   return (
-    <AuthContext.Provider value={{ user }}>
+    <AuthContext.Provider value={{ user, logout }}>
       {children}
     </AuthContext.Provider>
   );
