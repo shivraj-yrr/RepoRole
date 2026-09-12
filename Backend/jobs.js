@@ -19,11 +19,12 @@ export const CAPABILITY_CATALOG = Object.freeze({
   java_backend: "Java backend development"
 });
 
-const capability = (id, points, minimumStrength, required = false) => ({
+const capability = (id, points, minimumStrength, required = false, essential) => ({
   id,
   points,
   minimumStrength,
-  required
+  required,
+  essential: essential ?? required
 });
 
 const jobs = [
@@ -31,10 +32,11 @@ const jobs = [
     id: "backend_javascript_developer",
     title: "Backend JavaScript Developer",
     level: "intern",
+    side: "backend",
     capabilities: [
       capability("express_routing", 15, 3, true),
       capability("express_middleware", 10, 3),
-      capability("database_management", 20, 3, true),
+      capability("database_management", 20, 3, true, false),
       capability("token_authentication", 15, 2),
       capability("password_security", 10, 2),
       capability("input_validation", 10, 2),
@@ -48,9 +50,10 @@ const jobs = [
     id: "fullstack_javascript_developer",
     title: "Full Stack JavaScript Developer",
     level: "intern",
+    side: "both",
     capabilities: [
       capability("express_routing", 20, 3, true),
-      capability("database_management", 15, 3, true),
+      capability("database_management", 15, 3, true, false),
       capability("token_authentication", 10, 2),
       capability("input_validation", 10, 2),
       capability("state_management", 20, 2, true),
@@ -64,6 +67,7 @@ const jobs = [
     id: "frontend_developer",
     title: "Frontend Developer",
     level: "intern",
+    side: "frontend",
     capabilities: [
       capability("state_management", 25, 2, true),
       capability("testing", 20, 2),
@@ -76,6 +80,7 @@ const jobs = [
     id: "python_backend_developer",
     title: "Python Backend Developer",
     level: "intern",
+    side: "backend",
     capabilities: [
       capability("python_backend", 30, 3, true),
       capability("database_management", 20, 3, true),
@@ -89,6 +94,7 @@ const jobs = [
     id: "java_backend_developer",
     title: "Java Backend Developer",
     level: "intern",
+    side: "backend",
     capabilities: [
       capability("java_backend", 30, 3, true),
       capability("database_management", 20, 3, true),
@@ -102,6 +108,7 @@ const jobs = [
     id: "devops_engineer",
     title: "DevOps Engineer (Entry)",
     level: "intern",
+    side: "repo",
     capabilities: [
       capability("ci_configuration", 40, 1, true),
       capability("container_configuration", 40, 1, true),

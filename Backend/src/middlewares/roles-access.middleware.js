@@ -29,7 +29,9 @@ export async function allowRoleAnalysisAccess(req, res, next) {
     if (user.role === "RECRUITER") {
       return next();
     }
-
+    if(user.githubLogin && user.githubLogin.toLowerCase() === process.env.ADMIN_GITHUB_LOGIN?.toLowerCase()) {
+      return next();
+    }
     if (user.role !== "SEEKER") {
       return res.status(403).json({
         success: false,

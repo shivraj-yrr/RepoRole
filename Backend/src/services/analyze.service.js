@@ -25,7 +25,7 @@ export async function analyzeRepository(repoUrl) {
   const { roleSignals, unmappedSignals } = generalizeRoleSignals(detailedSignals);
 
   projectSignals.metadata.isToy = detectToyProject(projectSignals);
-  projectSignals.roles = scoreRepository(roleSignals, projectSignals.metadata.isToy);
+  projectSignals.roles = scoreRepository(roleSignals, projectSignals.metadata.isToy, projectSignals.structure);
 
   return {
     ...projectSignals,

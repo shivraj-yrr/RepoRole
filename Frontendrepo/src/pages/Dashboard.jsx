@@ -21,6 +21,7 @@ const Dashboard = () => {
   const [analyzingRepoId, setAnalyzingRepoId] = useState(null);
 
   const navigate = useNavigate();
+  const [analyzeError, setAnalyzeError] = useState("");
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -45,38 +46,29 @@ const Dashboard = () => {
   }, []);
 
   /* ================= ANALYZE FUNCTION ================= */
- const handleAnalyze = async (repo) => {
-  try {
-    setAnalyzingRepoId(repo.id); // ✅ start loading
-
-    console.log("REPO DATA:", repo);
-
-    const res = await fetch(API.analyzeRepo, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      credentials: "include",
-      body: JSON.stringify({
-        repo: repo.url,
-      }),
-    });
-
-    const data = await res.json();
-
-    console.log("API RESPONSE:", data);
-
-    if (res.ok) {
-      navigate("/analysis", { state: data });
-    } else {
-      console.error("Analysis failed:", data);
+  const handleAnalyze = async (repo) => {
+    try {
+      setAnalyzeError("");
+      setAnalyzingRepoId(repo.id);
+      const res = await fetch(API.analyzeRepo, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+        body: JSON.stringify({ repo: repo.url })
+      });
+      const data = await res.json();
+      if (res.ok) {
+        navigate("/analysis", { state: data });
+      } else {
+        setAnalyzeError(data.error || "Analysis failed. Please try again.");
+      }
+    } catch (err) {
+      console.error(err);
+      setAnalyzeError("Something went wrong. Please try again.");
+    } finally {
+      setAnalyzingRepoId(null);
     }
-  } catch (err) {
-    console.error(err);
-  } finally {
-    setAnalyzingRepoId(null); // ✅ stop loading
-  }
-};
+  };
   if (loading) return <p className="p-6">Loading...</p>;
   if (!user) return <Navigate to="/" />;
 
@@ -117,6 +109,15 @@ const Dashboard = () => {
 
   return (
     <div className="bg-[#f6f3ef] min-h-screen p-4 md:p-6">
+
+      {analyzeError && (
+        <div className="mb-6 bg-red-50 border border-red-300 rounded-xl p-4 text-red-700 text-sm">
+          <div className="flex items-start gap-2">
+            <span className="text-lg">??</span>
+            <span>{analyzeError}</span>
+          </div>
+        </div>
+      )}
 
       {/* ================= PROFILE ================= */}
       <div className="bg-purple-50 border border-purple-300 rounded-2xl p-4 md:p-6 flex flex-col md:flex-row md:items-center md:justify-between gap-6 shadow-sm">
