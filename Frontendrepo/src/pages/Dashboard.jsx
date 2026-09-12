@@ -60,7 +60,7 @@ const Dashboard = () => {
       if (res.ok) {
         navigate("/analysis", { state: data });
       } else {
-        setAnalyzeError(data.error || "Analysis failed. Please try again.");
+        setAnalyzeError(data?.message || "Something went wrong. Please try again.");
       }
     } catch (err) {
       console.error(err);

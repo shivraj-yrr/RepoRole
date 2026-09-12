@@ -34,7 +34,7 @@ const Home = () => {
       console.log("API Response:", data);
 
       if (!response.ok) {
-        setError(data.error || "Analysis failed. Please try again.");
+        setError(data.message || "Analysis failed. Please try again.");
         return;
       }
 
