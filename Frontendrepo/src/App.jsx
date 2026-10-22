@@ -10,12 +10,13 @@ import AuthSuccess from "./components/AuthSuccess";
 import Analysis from "./pages/analysis";
 import AnalyzePage from "./pages/AnalyzePage";
 import RecruiterLogin from "./pages/RecruiterLogin";
-
+import { Analytics } from '@vercel/analytics/react'
 
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 function App() {
   return (
+    <>
     <BrowserRouter>
       <Navbar />
 
@@ -56,6 +57,8 @@ function App() {
 
       </Routes>
     </BrowserRouter>
+    <Analytics />
+    </>
   );
 }
 
