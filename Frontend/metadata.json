@@ -1,0 +1,30 @@
+
+{
+  "title": "RepoRole - GitHub Repository Analyzer & Developer Role Matcher",
+  "description": "Analyze GitHub repositories to discover technical skills, code-level signals, and developer roles that match your projects. Get evidence-based insights from your code, not just your README. Free to try, with no source code stored.",
+  "applicationName": "RepoRole",
+  "keywords": [
+    "GitHub repository analyzer",
+    "developer role matcher",
+    "GitHub code analysis",
+    "developer skills assessment",
+    "repository analysis tool",
+    "backend developer skills",
+    "full stack developer skills",
+    "GitHub portfolio analyzer"
+  ],
+  "author": "ShivRaj",
+  "robots": "index, follow",
+  "openGraph": {
+    "title": "RepoRole - Discover What Your Code Demonstrates",
+    "description": "Analyze GitHub repositories, identify technical signals, and discover developer roles aligned with your code.",
+    "type": "website"
+  },
+  "twitter": {
+    "card": "summary_large_image",
+    "title": "RepoRole - GitHub Repository Analysis",
+    "description": "Go beyond the README. Analyze technical signals in your repositories and explore your developer role fit."
+  }
+}
+
+  
