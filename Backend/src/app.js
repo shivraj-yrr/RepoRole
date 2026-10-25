@@ -9,6 +9,7 @@ const app = express();
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 import algoRoutes from './routes/analyze.routes.js';
 import authRoutes from './routes/auth.routes.js';
+//import tempRouter from './routes/temp.routes.js';
 import { errorHandler } from './middlewares/errorHandler.js';
 
 app.set('trust proxy', 1);
@@ -33,6 +34,7 @@ app.get('/welcome.js', (req, res) => {
 
 app.use('/analyze', algoRoutes);
 app.use('/auth', authRoutes);
+//app.use('/temp', tempRouter);
 
 // Global error handler 
 app.use(errorHandler);

@@ -11,7 +11,7 @@ import DashboardPage from './pages/DashboardPage';
 import AnalysisPage from './pages/AnalysisPage';
 import { apiUrl, logout } from './api/client';
 import { RepoAnalysisData } from './types/analysis';
-import { Analytics } from '@vercel/analytics/next';
+import { Analytics } from '@vercel/analytics/react';
 
 function MainApp() {
   const [currentPath, setCurrentPath] = useState<string>(() => {
